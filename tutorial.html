@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Penggunaan Website - Admin & SuperAdmin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --admin-color: #10b981;
+            --admin-dark: #059669;
+            --super-color: #8b5cf6;
+            --super-dark: #7c3aed;
+            --bg: #0f0f1a;
+            --surface: #1a1a2e;
+            --surface2: #16213e;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 80px 20px 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+        }
+
+        header .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #a5b4fc;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: clamp(28px, 5vw, 52px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        header h1 span {
+            background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .nav-inner a {
+            white-space: nowrap;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all .2s;
+        }
+
+        .nav-inner a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+        }
+
+        .nav-inner a.admin {
+            color: #6ee7b7;
+        }
+
+        .nav-inner a.admin:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .nav-inner a.super {
+            color: #c4b5fd;
+        }
+
+        .nav-inner a.super:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
+        }
+
+        /* SECTION TITLE */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .icon-admin {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.3));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .icon-super {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.3));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .icon-general {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.3));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .section-header-text h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .section-header-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .tag-admin {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .tag-super {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* CHAPTER DIVIDER */
+        .chapter {
+            margin-bottom: 60px;
+        }
+
+        .chapter-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chapter-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* STEP CARD */
+        .step-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 24px;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .step-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .step-card.admin-card {
+            border-left: 3px solid var(--admin-color);
+        }
+
+        .step-card.super-card {
+            border-left: 3px solid var(--super-color);
+        }
+
+        .step-card.general-card {
+            border-left: 3px solid var(--primary);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 22px 24px;
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .num-admin {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+        }
+
+        .num-super {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+        }
+
+        .num-general {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* IMAGE PLACEHOLDER */
+        .img-placeholder {
+            margin: 0 24px 24px;
+            border: 2px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            transition: border-color .2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-placeholder:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .img-placeholder.empty .placeholder-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.3;
+        }
+
+        .img-placeholder.empty .placeholder-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .img-placeholder.empty .placeholder-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* INFO BOX */
+        .info-box {
+            margin: 0 24px 24px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .info-box.tip {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+        }
+
+        .info-box.warn {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fcd34d;
+        }
+
+        .info-box.note {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .info-box .icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .info-box p {
+            line-height: 1.5;
+        }
+
+        /* STEPS LIST */
+        .steps-list {
+            margin: 0 24px 24px;
+            padding-left: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .steps-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .steps-list li::before {
+            content: '→';
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .steps-list li strong {
+            color: var(--text);
+        }
+
+        /* GRID */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media(max-width:700px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* OVERVIEW CARDS */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        @media(max-width:600px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .overview-card {
+            border-radius: var(--radius);
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .overview-card.admin-ov {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.04));
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .overview-card.super-ov {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(124, 58, 237, 0.04));
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .overview-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .overview-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .overview-card ul li {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 8px;
+        }
+
+        .overview-card ul li::before {
+            content: '✓';
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .ov-admin ul li::before {
+            color: #6ee7b7;
+        }
+
+        .ov-super ul li::before {
+            color: #c4b5fd;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="badge">📘 Dokumentasi Penggunaan Sistem</div>
+        <h1>Tutorial <span>Admin & SuperAdmin</span></h1>
+        <p>Panduan lengkap penggunaan website point-of-sale restoran untuk Admin Restoran dan SuperAdmin.</p>
+    </header>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="#overview">🏠 Overview</a>
+            <a href="#login" class="admin">🔐 Login</a>
+            <a href="#dashboard-admin" class="admin">📊 Dashboard Admin</a>
+            <a href="#kategori" class="admin">🏷️ Kategori</a>
+            <a href="#menu" class="admin">🍽️ Menu</a>
+            <a href="#pesanan" class="admin">🧾 Pesanan</a>
+            <a href="#meja" class="admin">🪑 Meja & QR</a>
+            <a href="#profil" class="admin">👤 Profil</a>
+            <a href="#dashboard-super" class="super">⚡ Dashboard Super</a>
+            <a href="#restoran" class="super">🏪 Kelola Restoran</a>
+            <a href="#admin-manage" class="super">👥 Kelola Admin</a>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+            <div class="chapter-label">Pengenalan Sistem</div>
+            <div class="overview-grid">
+                <div class="overview-card admin-ov">
+                    <h3>👨‍💼 Admin Restoran</h3>
+                    <ul class="ov-admin">
+                        <li>Mengelola kategori menu</li>
+                        <li>Menambah & mengedit menu makanan/minuman</li>
+                        <li>Memonitor pesanan masuk secara real-time</li>
+                        <li>Mengelola meja & kode QR</li>
+                        <li>Melihat dashboard & analitik penjualan</li>
+                        <li>Perencanaan stok dengan regresi linear</li>
+                        <li>Edit profil & informasi restoran</li>
+                    </ul>
+                </div>
+                <div class="overview-card super-ov">
+                    <h3>🛡️ Super Admin</h3>
+                    <ul class="ov-super">
+                        <li>Memonitor seluruh restoran terdaftar</li>
+                        <li>Menambah & menghapus data restoran</li>
+                        <li>Mengelola akun admin restoran</li>
+                        <li>Melihat menu tiap restoran</li>
+                        <li>Restore akun admin yang dinonaktifkan</li>
+                        <li>Dashboard ringkasan seluruh sistem</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= -->
+        <!--        ADMIN SECTION     -->
+        <!-- ======================= -->
+
+        <!-- LOGIN -->
+        <section id="login">
+            <div class="chapter">
+                <div class="chapter-label">Langkah Awal <span class="tag-admin">ADMIN</span> <span
+                        class="tag-super">SUPERADMIN</span></div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-general">🔐</div>
+                    <div class="section-header-text">
+                        <h2>Login ke Sistem</h2>
+                        <p>Cara masuk ke halaman admin dan superadmin</p>
+                    </div>
+                </div>
+
+                <div class="step-card general-card">
+                    <div class="step-header">
+                        <div class="step-num num-general">1</div>
+                        <div>
+                            <div class="step-title">Buka Halaman Login</div>
+                            <div class="step-desc">Akses halaman login melalui browser dengan membuka URL sistem.
+                                Masukkan email dan password sesuai akun yang telah diberikan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman login</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Halaman Login</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Buka browser dan akses URL sistem</li>
+                        <li>Masukkan <strong>Email</strong> dan <strong>Password</strong> pada form login</li>
+                        <li>Klik tombol <strong>Masuk</strong></li>
+                        <li>Sistem akan mengarahkan ke dashboard sesuai role (Admin / SuperAdmin)</li>
+                    </ul>
+                    <div class="info-box tip">
+                        <span class="icon">💡</span>
+                        <p>Jika lupa password, hubungi SuperAdmin untuk mereset akun Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD ADMIN -->
+        <section id="dashboard-admin">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Dashboard</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">📊</div>
+                    <div class="section-header-text">
+                        <h2>Dashboard Admin <span class="tag-admin">ADMIN</span></h2>
+                        <p>Halaman utama yang menampilkan ringkasan data dan analitik restoran</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Ringkasan Statistik</div>
+                            <div class="step-desc">Dashboard menampilkan total pesanan, total pendapatan, jumlah menu,
+                                dan notifikasi stok rendah.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot kartu statistik dashboard</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Kartu Statistik Dashboard</div>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">2</div>
+                        <div>
+                            <div class="step-title">Grafik Penjualan</div>
+                            <div class="step-desc">Dashboard menampilkan grafik tren penjualan harian untuk memudahkan
+                                monitoring performa restoran.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot grafik penjualan</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Grafik Penjualan</div>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">3</div>
+                        <div>
+                            <div class="step-title">Perencanaan Stok (Regresi Linear)</div>
+                            <div class="step-desc">Tabel perencanaan stok menggunakan algoritma regresi linear untuk
+                                memprediksi kebutuhan stok berdasarkan histori penjualan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot tabel perencanaan stok</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Tabel Perencanaan Stok</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Pilih <strong>periode analisis</strong> (7, 14, 30, atau 60 hari)</li>
+                        <li>Sistem menghitung persamaan regresi <strong>Y = a + bX</strong> per menu</li>
+                        <li>Kolom <strong>Status</strong> menunjukkan apakah stok perlu ditambah atau masih aman</li>
+                    </ul>
+                    <div class="info-box note">
+                        <span class="icon">ℹ️</span>
+                        <p>Periode 7 dan 14 hari mungkin tidak menampilkan hasil jika data penjualan belum cukup untuk
+                            dihitung secara statistik.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KATEGORI -->
+        <section id="kategori">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Manajemen Kategori</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">🏷️</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Kategori Menu <span class="tag-admin">ADMIN</span></h2>
+                        <p>Menambah, mengedit, dan menghapus kategori untuk pengelompokan menu</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Melihat Daftar Kategori</div>
+                            <div class="step-desc">Buka menu <strong>Kategori</strong> di sidebar untuk melihat semua
+                                kategori yang tersedia di restoran Anda.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman daftar kategori</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Daftar Kategori</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="step-card admin-card">
+                        <div class="step-header">
+                            <div class="step-num num-admin">2</div>
+                            <div>
+                                <div class="step-title">Tambah Kategori Baru</div>
+                                <div class="step-desc">Klik tombol <strong>+ Tambah Kategori</strong>, isi nama
+                                    kategori, lalu simpan.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 Form tambah kategori</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">Form Tambah Kategori</div>
+                        </div>
+                    </div>
+                    <div class="step-card admin-card">
+                        <div class="step-header">
+                            <div class="step-num num-admin">3</div>
+                            <div>
+                                <div class="step-title">Edit / Hapus Kategori</div>
+                                <div class="step-desc">Klik ikon <strong>Edit</strong> untuk mengubah nama, atau ikon
+                                    <strong>Hapus</strong> untuk menghapus kategori.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 Tombol edit dan hapus</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">Edit / Hapus Kategori</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box warn">
+                    <span class="icon">⚠️</span>
+                    <p>Menghapus kategori yang masih memiliki menu aktif tidak diperbolehkan. Pindahkan atau hapus menu
+                        terlebih dahulu.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU -->
+        <section id="menu">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Manajemen Menu</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">🍽️</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Menu <span class="tag-admin">ADMIN</span></h2>
+                        <p>Menambah, mengedit, mengatur stok dan harga produk menu restoran</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Daftar Menu</div>
+                            <div class="step-desc">Halaman menu menampilkan semua produk beserta harga, stok, kategori,
+                                dan status (aktif/nonaktif). Gunakan filter kategori untuk menyaring tampilan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman daftar menu</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Halaman Daftar Menu</div>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">2</div>
+                        <div>
+                            <div class="step-title">Tambah Menu Baru</div>
+                            <div class="step-desc">Klik <strong>+ Tambah Menu</strong>. Isi nama, deskripsi, harga,
+                                stok, pilih kategori, dan upload foto menu (maks. 2MB).</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot form tambah menu</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Form Tambah Menu</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Isi <strong>Nama Menu</strong> dengan jelas dan spesifik</li>
+                        <li>Tentukan <strong>Harga</strong> dalam Rupiah</li>
+                        <li>Isi <strong>Stok</strong> yang tersedia</li>
+                        <li>Pilih <strong>Kategori</strong> yang sesuai</li>
+                        <li>Upload <strong>Foto Menu</strong> (format: JPG/PNG, maks 2MB)</li>
+                        <li>Klik <strong>Simpan</strong></li>
+                    </ul>
+                    <div class="info-box tip">
+                        <span class="icon">💡</span>
+                        <p>Setelah menyimpan, sistem akan otomatis mengarahkan ke halaman daftar menu dengan filter
+                            kategori yang sesuai.</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">3</div>
+                        <div>
+                            <div class="step-title">Edit Menu</div>
+                            <div class="step-desc">Klik ikon <strong>Edit</strong> pada menu yang ingin diubah. Ubah
+                                informasi yang diperlukan lalu klik Simpan Perubahan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot form edit menu</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Form Edit Menu</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESANAN -->
+        <section id="pesanan">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Manajemen Pesanan</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">🧾</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Pesanan <span class="tag-admin">ADMIN</span></h2>
+                        <p>Memonitor dan memperbarui status pesanan dari pelanggan secara real-time</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Daftar Pesanan</div>
+                            <div class="step-desc">Halaman pesanan menampilkan semua order yang masuk, lengkap dengan
+                                nomor meja, status pembayaran, dan total harga.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman daftar pesanan</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Halaman Daftar Pesanan</div>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">2</div>
+                        <div>
+                            <div class="step-title">Detail Pesanan</div>
+                            <div class="step-desc">Klik tombol <strong>Detail</strong> untuk melihat rincian item yang
+                                dipesan oleh pelanggan beserta jumlah dan harga satuan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman detail pesanan</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Detail Pesanan</div>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">3</div>
+                        <div>
+                            <div class="step-title">Update Status Pesanan</div>
+                            <div class="step-desc">Ubah status pesanan sesuai progres (Diproses → Siap → Selesai). Admin
+                                akan menerima notifikasi otomatis saat pesanan baru masuk.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot update status pesanan</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Update Status Pesanan</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Buka detail pesanan yang ingin diubah statusnya</li>
+                        <li>Pilih <strong>status baru</strong> dari dropdown yang tersedia</li>
+                        <li>Klik <strong>Update Status</strong></li>
+                        <li>Pelanggan akan menerima notifikasi perubahan status</li>
+                    </ul>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">4</div>
+                        <div>
+                            <div class="step-title">Export Data Pesanan</div>
+                            <div class="step-desc">Data pesanan dapat diekspor ke format Excel/CSV untuk keperluan
+                                laporan keuangan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot tombol export</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Export Pesanan</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Atur <strong>filter tanggal</strong> sesuai rentang yang diinginkan</li>
+                        <li>Klik tombol <strong>Export</strong></li>
+                        <li>File akan otomatis terunduh ke komputer Anda</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEJA & QR CODE -->
+        <section id="meja">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Meja & QR Code</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">🪑</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Meja & QR Code <span class="tag-admin">ADMIN</span></h2>
+                        <p>Mengatur nomor meja dan menghasilkan kode QR untuk pemesanan mandiri pelanggan</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Daftar Meja</div>
+                            <div class="step-desc">Halaman ini menampilkan semua meja yang terdaftar beserta status dan
+                                QR code masing-masing.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman daftar meja</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Daftar Meja</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="step-card admin-card">
+                        <div class="step-header">
+                            <div class="step-num num-admin">2</div>
+                            <div>
+                                <div class="step-title">Tambah Meja</div>
+                                <div class="step-desc">Klik <strong>+ Tambah Meja</strong>, masukkan nomor meja, dan
+                                    sistem akan otomatis menghasilkan QR Code unik.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 Form tambah meja</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">Form Tambah Meja</div>
+                        </div>
+                    </div>
+                    <div class="step-card admin-card">
+                        <div class="step-header">
+                            <div class="step-num num-admin">3</div>
+                            <div>
+                                <div class="step-title">Download QR Code</div>
+                                <div class="step-desc">Unduh QR Code setiap meja untuk dicetak dan dipasang di meja
+                                    restoran agar pelanggan dapat scan untuk memesan.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 QR Code meja</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">QR Code Meja</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFIL RESTORAN -->
+        <section id="profil">
+            <div class="chapter">
+                <div class="chapter-label">Admin Restoran — Profil</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-admin">👤</div>
+                    <div class="section-header-text">
+                        <h2>Edit Profil Restoran <span class="tag-admin">ADMIN</span></h2>
+                        <p>Memperbarui informasi dan identitas restoran yang tampil ke pelanggan</p>
+                    </div>
+                </div>
+
+                <div class="step-card admin-card">
+                    <div class="step-header">
+                        <div class="step-num num-admin">1</div>
+                        <div>
+                            <div class="step-title">Ubah Informasi Restoran</div>
+                            <div class="step-desc">Perbarui nama restoran, deskripsi, nomor telepon, alamat, dan
+                                foto/logo restoran melalui halaman Edit Profil.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot form edit profil restoran</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Form Edit Profil Restoran</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Buka menu <strong>Profil / Restoran</strong> di sidebar</li>
+                        <li>Ubah informasi yang diperlukan pada form</li>
+                        <li>Upload foto restoran baru jika ingin mengganti</li>
+                        <li>Klik <strong>Simpan Perubahan</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================== -->
+        <!--      SUPERADMIN SECTION    -->
+        <!-- ========================== -->
+
+        <section id="dashboard-super">
+            <div class="chapter">
+                <div class="chapter-label">SuperAdmin — Dashboard</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-super">⚡</div>
+                    <div class="section-header-text">
+                        <h2>Dashboard SuperAdmin <span class="tag-super">SUPERADMIN</span></h2>
+                        <p>Ringkasan keseluruhan sistem: total restoran, admin, dan statistik platform</p>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">1</div>
+                        <div>
+                            <div class="step-title">Halaman Dashboard SuperAdmin</div>
+                            <div class="step-desc">Setelah login sebagai SuperAdmin, Anda akan melihat ringkasan jumlah
+                                restoran aktif, total admin, dan statistik platform secara keseluruhan.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot dashboard superadmin</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Dashboard SuperAdmin</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KELOLA RESTORAN -->
+        <section id="restoran">
+            <div class="chapter">
+                <div class="chapter-label">SuperAdmin — Manajemen Restoran</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-super">🏪</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Restoran <span class="tag-super">SUPERADMIN</span></h2>
+                        <p>Menambah, mengedit, menghapus, dan memantau semua restoran di platform</p>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">1</div>
+                        <div>
+                            <div class="step-title">Daftar Semua Restoran</div>
+                            <div class="step-desc">Menu <strong>Restoran</strong> menampilkan seluruh restoran yang
+                                terdaftar dalam platform beserta informasi singkat tiap restoran.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot daftar restoran</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Daftar Semua Restoran</div>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">2</div>
+                        <div>
+                            <div class="step-title">Tambah Restoran Baru</div>
+                            <div class="step-desc">Klik <strong>+ Tambah Restoran</strong> untuk mendaftarkan restoran
+                                baru ke dalam platform.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot form tambah restoran</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Form Tambah Restoran</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Isi <strong>Nama Restoran</strong>, alamat, dan nomor telepon</li>
+                        <li>Upload <strong>Logo/Foto Restoran</strong></li>
+                        <li>Isi <strong>Email</strong> dan <strong>Password</strong> untuk akun admin restoran tersebut
+                        </li>
+                        <li>Klik <strong>Simpan</strong> — sistem otomatis membuat akun admin baru</li>
+                    </ul>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">3</div>
+                        <div>
+                            <div class="step-title">Edit Data Restoran</div>
+                            <div class="step-desc">Klik ikon <strong>Edit</strong> pada baris restoran untuk memperbarui
+                                informasi nama, alamat, telepon, atau logo.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot form edit restoran</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Form Edit Restoran</div>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">4</div>
+                        <div>
+                            <div class="step-title">Lihat Menu Restoran</div>
+                            <div class="step-desc">Klik tombol <strong>Lihat Menu</strong> pada salah satu restoran
+                                untuk melihat seluruh daftar menu yang dimiliki restoran tersebut.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot halaman menu restoran (view superadmin)
+                        </div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Menu Restoran (View SuperAdmin)</div>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">5</div>
+                        <div>
+                            <div class="step-title">Hapus Restoran</div>
+                            <div class="step-desc">Klik ikon <strong>Hapus</strong> untuk menghapus restoran dari
+                                platform. Aksi ini bersifat permanen.</div>
+                        </div>
+                    </div>
+                    <div class="info-box warn">
+                        <span class="icon">⚠️</span>
+                        <p>Menghapus restoran akan menghapus seluruh data terkait (menu, pesanan, dll). Pastikan data
+                            sudah diarsipkan sebelum menghapus.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KELOLA ADMIN -->
+        <section id="admin-manage">
+            <div class="chapter">
+                <div class="chapter-label">SuperAdmin — Manajemen Admin</div>
+
+                <div class="section-header">
+                    <div class="section-icon icon-super">👥</div>
+                    <div class="section-header-text">
+                        <h2>Kelola Akun Admin <span class="tag-super">SUPERADMIN</span></h2>
+                        <p>Menambah, menonaktifkan, dan memulihkan akun admin restoran</p>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">1</div>
+                        <div>
+                            <div class="step-title">Daftar Admin</div>
+                            <div class="step-desc">Halaman ini menampilkan semua akun admin yang terdaftar di platform
+                                beserta status aktif/nonaktif.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot daftar admin</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Daftar Admin</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="step-card super-card">
+                        <div class="step-header">
+                            <div class="step-num num-super">2</div>
+                            <div>
+                                <div class="step-title">Tambah Admin Baru</div>
+                                <div class="step-desc">Klik <strong>+ Tambah Admin</strong>, isi nama, email, password,
+                                    dan pilih restoran yang dikelola.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 Form tambah admin</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">Form Tambah Admin</div>
+                        </div>
+                    </div>
+                    <div class="step-card super-card">
+                        <div class="step-header">
+                            <div class="step-num num-super">3</div>
+                            <div>
+                                <div class="step-title">Edit Akun Admin</div>
+                                <div class="step-desc">Klik <strong>Edit</strong> untuk memperbarui nama, email,
+                                    password, atau restoran yang dikelola admin.</div>
+                            </div>
+                        </div>
+                        <div class="img-placeholder empty" style="min-height:160px">
+                            <div class="placeholder-label">📷 Form edit admin</div>
+                            <div class="placeholder-icon">🖼️</div>
+                            <div class="placeholder-text">Form Edit Admin</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card super-card">
+                    <div class="step-header">
+                        <div class="step-num num-super">4</div>
+                        <div>
+                            <div class="step-title">Nonaktifkan & Pulihkan Admin</div>
+                            <div class="step-desc">Admin dapat dinonaktifkan (soft delete) tanpa menghapus data. Akun
+                                yang dinonaktifkan dapat dipulihkan kembali kapan saja.</div>
+                        </div>
+                    </div>
+                    <div class="img-placeholder empty">
+                        <div class="placeholder-label">📷 Tambahkan screenshot fitur nonaktifkan & restore admin</div>
+                        <div class="placeholder-icon">🖼️</div>
+                        <div class="placeholder-text">Nonaktifkan & Restore Admin</div>
+                    </div>
+                    <ul class="steps-list">
+                        <li>Klik <strong>Nonaktifkan</strong> untuk menonaktifkan akun admin (data tetap tersimpan)</li>
+                        <li>Akun yang dinonaktifkan akan muncul di daftar dengan status <strong>Tidak Aktif</strong>
+                        </li>
+                        <li>Klik <strong>Pulihkan</strong> untuk mengaktifkan kembali akun admin</li>
+                    </ul>
+                    <div class="info-box tip">
+                        <span class="icon">💡</span>
+                        <p>Gunakan fitur <strong>Nonaktifkan</strong> daripada <strong>Hapus Permanen</strong> agar data
+                            histori pesanan tetap tersimpan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Sistem POS Restoran &nbsp;|&nbsp; Dokumentasi Tutorial Admin & SuperAdmin</p>
+        <p style="margin-top:6px;opacity:.5">Versi 1.0 — Terakhir diperbarui Juli 2025</p>
+    </footer>
+
+</body>
+
+</html>
